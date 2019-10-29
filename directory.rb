@@ -2,9 +2,11 @@ def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
-def print(students)
+def print_with_criteria(students)
+  puts "Enter letter you want filter by"
+  letter = gets.chomp.capitalize
   students.each_with_index do |student, index|
-    puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)"
+    puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)" if student[:name].chr == letter
   end
 end
 def print_footer(names)
@@ -31,5 +33,5 @@ end
 #nothing happens until we call the methods
 students = input_students
 print_header
-print(students)
+print_with_criteria(students)
 print_footer(students)
