@@ -3,10 +3,10 @@ def print_header
   puts "-------------"
 end
 def print_with_criteria(students)
-  puts "Enter letter you want filter by"
-  letter = gets.chomp.capitalize
+  # puts "Enter letter you want filter by"
+  # letter = gets.chomp.capitalize
   students.each_with_index do |student, index|
-    puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)" if student[:name].chr == letter
+    puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)" if student[:name].length < 12
   end
 end
 def print_footer(names)
