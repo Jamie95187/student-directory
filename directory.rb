@@ -11,7 +11,9 @@ def print_with_criteria(students)
   count = 1
   while !students.empty?
     student = students.pop
-    puts "#{count} #{student[:name]} (#{student[:cohort]} cohort, enjoys #{student[:hobby]}, #{student[:height]}cm, born in #{student[:country_of_birth]})"
+    print "#{count}"
+    puts " #{student[:name]} (#{student[:cohort]} cohort, enjoys #{student[:hobby]},
+    #{student[:height]}cm, born in #{student[:country_of_birth]})".center(65)
     count += 1
   end
 end
@@ -45,6 +47,7 @@ def input_students
   # return the array of students
   students
 end
+# helper method to ask user for input
 def question(information)
   puts "Please enter the #{information} of the student"
 end
