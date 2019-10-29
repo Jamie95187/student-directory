@@ -11,7 +11,7 @@ def print_with_criteria(students)
   count = 1
   while !students.empty?
     student = students.pop
-    puts "#{count} #{student[:name]} (#{student[:cohort]} cohort)"
+    puts "#{count} #{student[:name]} (#{student[:cohort]} cohort, enjoys #{student[:hobby]}, #{student[:height]}cm, born in #{student[:country_of_birth]})"
     count += 1
   end
 end
