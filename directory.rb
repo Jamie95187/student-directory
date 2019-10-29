@@ -24,26 +24,29 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  puts "Please enter the name of the student"
+  question("name")
   # while the name is not empty, repeat this code
   loop do
     name = gets.chomp
     break if name.empty?
     #Ask user to input the additional information of the student
-    puts "Please enter the hobby of the student"
+    question("hobby")
     hobby = gets.chomp
-    puts "Please enter the height of the student"
+    question("height")
     height = gets.chomp
-    puts "Please enter the country of birth of the student"
+    question("country of birth")
     country_of_birth = gets.chomp
     # add the student hash to the array
     students << {name: name, cohort: :november, hobby: hobby, height: height, country_of_birth: country_of_birth}
     puts "Now we have #{students.count} students"
     # ask for another name from the user
-    puts "Please enter the name of the student"
+    question("name")
   end
   # return the array of students
   students
+end
+def question(information)
+  puts "Please enter the #{information} of the student"
 end
 #nothing happens until we call the methods
 students = input_students
