@@ -19,17 +19,17 @@ def input_students
   question("name & cohort")
   # while the name is not empty, repeat this code
   loop do
-    name_and_cohort = [gets.chomp, gets.chomp]
+    name_and_cohort = [gets.rstrip, gets.rstrip]
     break if name_and_cohort.first == "stop"
     name_and_cohort[0] = "N/A" if name_and_cohort.first.empty?
     name_and_cohort.last << "november" if name_and_cohort.last.empty?
     #Ask user to input the additional information of the student
     question("hobby")
-    hobby = gets.chomp
+    hobby = gets.rstrip
     question("height")
-    height = gets.chomp
+    height = gets.rstrip
     question("country of birth")
-    country_of_birth = gets.chomp
+    country_of_birth = gets.rstrip
     # add the student hash to the array
     students << {name: name_and_cohort.first, cohort: name_and_cohort.last.to_sym, hobby: hobby, height: height, country_of_birth: country_of_birth}
     students.size > 1 ? (puts "Now we have #{students.count} students") : (puts "Now we have 1 student")
@@ -48,6 +48,6 @@ students = input_students
 student_count = students.count
 print_header
 puts "Enter which cohort you want to print by"
-cohort = gets.chomp.to_sym
+cohort = gets.rstrip.to_sym
 print_with_criteria(students, cohort)
 print_footer(student_count)
