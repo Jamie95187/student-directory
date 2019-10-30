@@ -2,19 +2,9 @@ def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
-def print_with_criteria(students)
-  # puts "Enter letter you want filter by"
-  # letter = gets.chomp.capitalize
-  # students.each_with_index do |student, index|
-  #   puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)" if student[:name].length < 12
-  # end
-  count = 1
-  while !students.empty?
-    student = students.pop
-    print "#{count}"
-    puts " #{student[:name]} (#{student[:cohort]} cohort, enjoys #{student[:hobby]},
-    #{student[:height]}cm, born in #{student[:country_of_birth]})".center(65)
-    count += 1
+def print_with_criteria(students, cohort)
+  students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]}, #{student[:hobby]}, #{student[:height]}cm, #{student[:country_of_birth]})" if student[:cohort] == cohort
   end
 end
 def print_footer(number)
@@ -57,5 +47,7 @@ end
 students = input_students
 student_count = students.count
 print_header
-print_with_criteria(students)
+puts "Enter which cohort you want to print by"
+cohort = gets.chomp.to_sym
+print_with_criteria(students, cohort)
 print_footer(student_count)
