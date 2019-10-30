@@ -22,15 +22,17 @@ def print_footer(number)
 end
 def input_students
   puts "Please enter the names and information of the students"
-  puts "To finish enter an empty name"
+  puts "To finish enter stop as the name"
   # create an empty array
   students = []
   # get the first name
-  question("name")
+  question("name & cohort")
   # while the name is not empty, repeat this code
   loop do
-    name = gets.chomp
-    break if name.empty?
+    name_and_cohort = [gets.chomp, gets.chomp]
+    break if name_and_cohort.first == "stop"
+    name_and_cohort[0] = "N/A" if name_and_cohort.first.empty?
+    name_and_cohort.last << "november" if name_and_cohort.last.empty?
     #Ask user to input the additional information of the student
     question("hobby")
     hobby = gets.chomp
@@ -39,7 +41,7 @@ def input_students
     question("country of birth")
     country_of_birth = gets.chomp
     # add the student hash to the array
-    students << {name: name, cohort: :november, hobby: hobby, height: height, country_of_birth: country_of_birth}
+    students << {name: name_and_cohort.first, cohort: name_and_cohort.last.to_sym, hobby: hobby, height: height, country_of_birth: country_of_birth}
     puts "Now we have #{students.count} students"
     # ask for another name from the user
     question("name")
