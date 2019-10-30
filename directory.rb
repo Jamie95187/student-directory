@@ -2,13 +2,13 @@ def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
-def print_with_criteria(students, cohort)
+def print_with_filter(students, cohort)
   students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]}, #{student[:hobby]}, #{student[:height]}cm, #{student[:country_of_birth]})" if student[:cohort] == cohort
   end
 end
-def print_footer(number)
-  puts "Overall, we have #{number} great students"
+def print_footer(students)
+  puts "Overall, we have #{students.count} great students"
 end
 def input_students
   puts "Please enter the names and information of the students"
@@ -43,15 +43,47 @@ end
 def question(information)
   puts "Please enter the #{information} of the student"
 end
-#nothing happens until we call the methods
-students = input_students
-student_count = students.count
-print_header
-if !students.empty?
-  puts "Enter which cohort you want to print by"
-  cohort = gets.rstrip.to_sym
-  print_with_criteria(students, cohort)
-  print_footer(student_count)
-else
-  puts "There are no students in the directory!"
+
+# student_count = students.count
+# print_header
+# if !students.empty?
+#   puts "Enter which cohort you want to print by"
+#   cohort = gets.rstrip.to_sym
+#   print_with_criteria(students, cohort)
+#   print_footer(student_count)
+# else
+#   puts "There are no students in the directory!"
+# end
+
+def interactive_menu
+  students = []
+  loop do
+    #1. print the menu and ask the user what to do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit" # 9 because we'll be adding more items
+    #2. read the input and save it into a variable
+    selection = gets.chomp
+    #3. do what the user has asked
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print_header
+        if !students.empty?
+          puts "Enter which cohort you want to print by"
+          cohort = gets.rstrip.to_sym
+          print_with_filter(students, cohort)
+          print_footer(students)
+        else
+          puts "There are no students in the directory!"
+        end
+      when "9"
+        exit # this will casue the program to terminate
+      else
+        puts "I don't know what you meant, try again"
+    end
+  end
 end
+
+interactive_menu
