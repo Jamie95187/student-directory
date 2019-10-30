@@ -12,7 +12,7 @@ def print_footer(number)
 end
 def input_students
   puts "Please enter the names and information of the students"
-  puts "To finish enter stop as the name"
+  puts "To finish enter stop as the name and return twice"
   # create an empty array
   students = []
   # get the first name
@@ -47,7 +47,11 @@ end
 students = input_students
 student_count = students.count
 print_header
-puts "Enter which cohort you want to print by"
-cohort = gets.rstrip.to_sym
-print_with_criteria(students, cohort)
-print_footer(student_count)
+if !students.empty?
+  puts "Enter which cohort you want to print by"
+  cohort = gets.rstrip.to_sym
+  print_with_criteria(students, cohort)
+  print_footer(student_count)
+else
+  puts "There are no students in the directory!"
+end
