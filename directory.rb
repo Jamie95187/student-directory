@@ -32,7 +32,7 @@ def input_students
     country_of_birth = gets.chomp
     # add the student hash to the array
     students << {name: name_and_cohort.first, cohort: name_and_cohort.last.to_sym, hobby: hobby, height: height, country_of_birth: country_of_birth}
-    puts "Now we have #{students.count} students"
+    students.size > 1 ? (puts "Now we have #{students.count} students") : (puts "Now we have 1 student")
     # ask for another name from the user
     question("name")
   end
