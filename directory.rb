@@ -6,7 +6,7 @@ def print_header
 end
 def print_students_with_filter(cohort)
   @students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]}, #{student[:hobby]}, #{student[:height]}cm, #{student[:country_of_birth]})" if student[:cohort] == cohort
+    puts "#{student[:name]} (#{student[:cohort]}, #{student[:hobby]}, #{student[:height]}, #{student[:country_of_birth]})" if student[:cohort] == cohort
   end
 end
 def print_footer
@@ -24,7 +24,7 @@ def input_students
     question("hobby")
     hobby = gets.rstrip
     question("height")
-    height = gets.rstrip
+    height = gets.rstrip + "cm"
     question("country of birth")
     country_of_birth = gets.rstrip
     @students << {name: name_and_cohort.first, cohort: name_and_cohort.last.to_sym, hobby: hobby, height: height, country_of_birth: country_of_birth}
@@ -45,6 +45,7 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit"
 end
 def show_students
@@ -64,11 +65,24 @@ def process(selection)
       input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit
     else
       puts "I don't know what you meant, try again"
   end
+end
+def save_students
+  # open the file for wrtiing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort], student[:hobby], student[:height], student[:country_of_birth]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
 end
 
 interactive_menu
