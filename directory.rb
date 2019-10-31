@@ -17,16 +17,16 @@ def input_students
   puts "To finish enter stop as the name and return twice"
   question("name & cohort")
   loop do
-    name_and_cohort = [gets.rstrip, gets.rstrip]
+    name_and_cohort = [STDIN.gets.rstrip, STDIN.gets.rstrip]
     break if name_and_cohort.first == "stop"
     name_and_cohort[0] = "N/A" if name_and_cohort.first.empty?
     name_and_cohort.last << "november" if name_and_cohort.last.empty?
     question("hobby")
-    hobby = gets.rstrip
+    hobby = STDIN.gets.rstrip
     question("height")
-    height = gets.rstrip + "cm"
+    height = STDIN.gets.rstrip + "cm"
     question("country of birth")
-    country_of_birth = gets.rstrip
+    country_of_birth = STDIN.gets.rstrip
     @students << {name: name_and_cohort.first, cohort: name_and_cohort.last.to_sym, hobby: hobby, height: height, country_of_birth: country_of_birth}
     @students.size > 1 ? (puts "Now we have #{@students.count} students") : (puts "Now we have 1 student")
     question("name")
@@ -39,7 +39,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 def print_menu
@@ -52,8 +52,8 @@ end
 def show_students
   print_header
   if !@students.empty?
-    puts "Enter which cohort you want to print by"
-    cohort = gets.rstrip.to_sym
+    puts "Enter which cohort you want to print?"
+    cohort = STDIN.gets.rstrip.to_sym
     print_students_with_filter(cohort)
     print_footer
   else
@@ -87,13 +87,24 @@ def save_students
   end
   file.close
 end
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, hobby, height, origin = line.chomp.split(',')
-      @students << {name: name, cohort: cohort.to_sym, hobby: hobby, height: height, country_of_birth: origin}
-    end
-    file.close
+    @students << {name: name, cohort: cohort.to_sym, hobby: hobby, height: height, country_of_birth: origin}
   end
-
+  file.close
+end
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exists
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
+end
+try_load_students
 interactive_menu
