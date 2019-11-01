@@ -3,8 +3,8 @@
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to students1.csv"
+  puts "4. Load the list from students1.csv"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -18,14 +18,19 @@ end
 def process(selection)
   case selection
   when "1"
+    puts "You have selected option 1 to input students."
     input_students
   when "2"
+    puts "You have selected option 2 to show the students."
     show_students
   when "9"
+    puts "You have selected option 9 to exit.\nGoodBye!"
     exit # this will cause the program to terminate
   when "3"
+    puts "You have selected option 3 to save the students to a file."
     save_students
   when "4"
+    puts "You have selected option 4 to load students from a file."
     load_students_from_a_file
   else
     puts "I don't know what you meant, try again"
@@ -49,6 +54,7 @@ def input_students
     # get another name from the user
     name = STDIN.gets.chomp
   end
+  puts "You have finished inputting students."
 end
 
 def show_students
@@ -82,6 +88,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "The students have been saved to the file!"
 end
 
 def load_students_from_a_file(filename = "students1.csv")
@@ -92,6 +99,7 @@ def load_students_from_a_file(filename = "students1.csv")
     add_one_student(name, cohort)
   end
   file.close
+  puts "You have loaded students from #{filename}!"
 end
 
 def load_students_from_command_line
