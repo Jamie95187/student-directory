@@ -26,7 +26,7 @@ def process(selection)
   when "3"
     save_students
   when "4"
-    load_students
+    load_students_from_a_file
   else
     puts "I don't know what you meant, try again"
   end
@@ -84,7 +84,7 @@ def save_students
   file.close
 end
 
-def load_students(filename = "students1.csv")
+def load_students_from_a_file(filename = "students1.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name = line.chomp.split(',').first
@@ -94,10 +94,15 @@ def load_students(filename = "students1.csv")
   file.close
 end
 
-def try_load_students(filename = "students1.csv")
-  filename = ARGV.first if filename.nil?# first argument from the command line
+def load_students_from_command_line
+  filename = ARGV.first
+  filename = "students1.csv" if filename.nil?
+  check_if_file_exits_and_print_result(filename)
+end
+
+def check_if_file_exits_and_print_result(filename)
   if File.exists?(filename) # if it exists
-    load_students(filename)
+    load_students_from_a_file(filename)
      puts "Loaded #{@students.count} from #{filename}"
   else # if it doesn't exist
     puts "Sorry, #{filename} doesn't exist."
@@ -105,5 +110,5 @@ def try_load_students(filename = "students1.csv")
   end
 end
 
-try_load_students
+load_students_from_command_line
 interactive_menu
