@@ -28,10 +28,10 @@ def process(selection)
     exit # this will cause the program to terminate
   when "3"
     puts "You have selected option 3 to save the students to a file."
-    save_students
+    ask_for_file == "" ? save_students : save_students(ask_for_file)
   when "4"
     puts "You have selected option 4 to load students from a file."
-    load_students_from_a_file
+    ask_for_file == "" ? load_students_from_a_file : load_students_from_a_file(ask_for_file)
   else
     puts "I don't know what you meant, try again"
   end
@@ -78,10 +78,9 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-def save_students
-  # open the file for writing
-  file = File.open("students1.csv", "w")
-  # iterate over the array of students
+# If no parameter provided use default file "students1.csv"
+def save_students(filename = "students1.csv")
+  file = File.open(filename, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
@@ -91,6 +90,7 @@ def save_students
   puts "The students have been saved to the file!"
 end
 
+# If no parameter provided use default file "students1.csv"
 def load_students_from_a_file(filename = "students1.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
@@ -116,6 +116,12 @@ def check_if_file_exits_and_print_result(filename)
     puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
   end
+end
+
+def ask_for_file
+  puts "Enter the file name you would like save or load from."
+  filename = gets.chomp
+  filename
 end
 
 load_students_from_command_line
