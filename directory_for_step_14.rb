@@ -1,3 +1,5 @@
+require 'CSV'
+
 @students = [] # an empty array accessible to all methods
 
 def print_menu
@@ -80,11 +82,10 @@ end
 
 # If no parameter provided use default file "students1.csv"
 def save_students(filename = "students1.csv")
-  File.open(filename, "w") do |file|
+  CSV.open(filename, "wb") do |csv|
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      student_as_array = [student[:name], student[:cohort]]
+      csv << student_as_array
     end
   end
   puts "The students have been saved to #{filename}!"
@@ -92,12 +93,10 @@ end
 
 # If no parameter provided use default file "students1.csv"
 def load_students_from_a_file(filename = "students1.csv")
-  File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-    name = line.chomp.split(',').first
-    cohort = line.chomp.split(',')[1].to_sym
+  CSV.foreach(filename) do |row|
+    name = row.first
+    cohort = row[1]
       add_one_student(name, cohort)
-    end
   end
   puts "You have loaded students from #{filename}!"
 end
